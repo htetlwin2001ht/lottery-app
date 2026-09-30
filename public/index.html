@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lottery Betting Manager</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Lottery Betting Manager</h1>
+    <p>4D · 5D · 6D — Telegram Mini App</p>
+    <p id="whoami" class="hint"></p>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-mode="4">4D</div>
+    <div class="tab" data-mode="5">5D</div>
+    <div class="tab" data-mode="6">6D</div>
+  </div>
+
+  <div class="card">
+    <h2>Enter Bets</h2>
+    <div class="row">
+      <div class="field">
+        <label>Draw Date</label>
+        <input type="date" id="drawDate">
+      </div>
+      <div class="field">
+        <label>Customer (optional)</label>
+        <input type="text" id="customer" placeholder="e.g. Ko Ko">
+      </div>
+      <div class="field">
+        <label>Lottery House</label>
+        <select id="house"></select>
+      </div>
+    </div>
+
+    <div id="grid4d">
+      <div class="hint" style="margin-top:14px;">Enter a 4-digit NUMBER, then stakes under B, S, 4A, 4B, 4C, 4E. Minimum 1,000 per column.</div>
+      <div class="gridwrap">
+        <table class="betgrid">
+          <thead><tr>
+            <th class="colidx">#</th><th>Number</th>
+            <th>B</th><th>S</th><th>4A</th><th>4B</th><th>4C</th><th>4E</th>
+          </tr></thead>
+          <tbody id="gridBody"></tbody>
+        </table>
+      </div>
+      <button class="btn btn-add" id="saveGridBtn">+ Save Rows</button>
+    </div>
+
+    <div id="gridND" style="display:none;">
+      <div class="hint" style="margin-top:14px;" id="ndHint">Enter a NUMBER on each row and its stake. Minimum 1,000.</div>
+      <div class="gridwrap">
+        <table class="betgrid">
+          <thead><tr><th class="colidx">#</th><th>Number</th><th>Amount</th></tr></thead>
+          <tbody id="gridNDBody"></tbody>
+        </table>
+      </div>
+      <button class="btn btn-add" id="saveNDBtn">+ Save Rows</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>My Bets <span class="badge" id="countBadge">0 rows</span></h2>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>#</th><th>Number</th><th>House</th><th>Stakes</th><th>Total</th><th>Customer</th><th></th></tr></thead>
+        <tbody id="betBody"><tr><td colspan="7" class="empty">No bets yet</td></tr></tbody>
+      </table>
+    </div>
+    <div class="totals">
+      <div class="stat"><div class="k">Total Numbers</div><div class="v" id="totalCount">0</div></div>
+      <div class="stat"><div class="k">Total Amount</div><div class="v" id="totalAmount">0</div></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn btn-sm btn-ghost" id="reloadBtn">Reload</button>
+      <button class="btn btn-sm btn-ghost" id="reportBtn">Report</button>
+    </div>
+  </div>
+
+  <div class="card" id="reportCard" style="display:none;">
+    <h2>Report <button class="btn btn-sm btn-ghost" id="reportCloseBtn" style="float:right;">Close</button></h2>
+    <div id="reportArea"></div>
+  </div>
+
+  <!-- Admin-only: enter winning numbers -->
+  <div class="card" id="adminCard" style="display:none;">
+    <h2>Admin — Enter Winning Numbers</h2>
+    <div class="row">
+      <div class="field"><label>House</label><select id="aHouse"></select></div>
+      <div class="field"><label>Draw Date</label><input type="date" id="aDate"></div>
+      <div class="field"><label>Draw No.</label><input type="text" id="aDrawNo" inputmode="numeric"></div>
+    </div>
+    <div id="aFields"></div>
+    <button class="btn btn-add" id="aSaveBtn">Save Winning Numbers</button>
+    <button class="btn btn-add" id="aCheckBtn" style="background:var(--accent);color:#111;">Check Winners (all users)</button>
+    <div id="aResult"></div>
+  </div>
+
+  <footer>Data stored securely on the server · login via Telegram</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
